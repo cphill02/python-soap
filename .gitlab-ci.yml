@@ -1,0 +1,38 @@
+include:
+  - project: "tmobile/templates"
+    file: "/gitlab-ci/.tmo.global.common.gitlab-ci.yml"
+
+  - project: "tmobile/templates"
+    file: "gitlab-ci/.tmo.job.docker.gitlab-ci.yml"
+
+  - project: "tmobile/templates"
+    file: "gitlab-ci/.tmo.job.dockerScan.gitlab-ci.yml"
+
+  - project: "tmobile/templates"
+    file: "/gitlab-ci/.tmo.function.duck-deploy.gitlab-ci.yml"
+
+stages:
+  - tmo
+  - test
+  - package
+  - ci
+  - deploy
+
+# put these above any custom jobs
+variables:
+  # how registry image gets named and semantically versioned.
+  EXTRA_DOCKER_TAG: "$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CONTAINER_VERSION.$CI_PIPELINE_IID"
+  DUCK_DEBUG: "true"
+  DUCK_VERSION: "latest"
+
+deploy-dev:
+  stage: deploy
+  extends: .duck_deploy
+  # this part was outdated in the docs ( below )
+  variables:
+    CONDUCKTOR_CONFIG_PATH: ./dev_deploy_info.yaml
+    GIT_DEPTH: 1
+    CONDUCKTOR_NS: eti-dev-duck-dev-w2
+    CONDUCKTOR_TARGET: duck-dev-w2
+  environment:
+    name: dev

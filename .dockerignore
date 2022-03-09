@@ -1,0 +1,13 @@
+Dockerfile*
+docker-compose*
+.dockerignore
+.git
+.gitignore
+.env
+MANIFEST.in
+README.*
+LICENSE
+.vscode/*
+tox.ini
+.coveragerc
+tests/*

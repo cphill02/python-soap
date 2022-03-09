@@ -1,3 +1,7 @@
+import sys
+from os.path import dirname, join, abspath
+sys.path.insert(0, abspath(join(dirname(__file__), '..', 'src', 'panopto_api')))
+
 from panopto_api.AuthenticatedClientFactory import AuthenticatedClientFactory
 import unittest
 
